@@ -10,6 +10,7 @@ class RepositoryCategoryController extends GetxController {
   var repositoryCategoryList = <RepositoryCategoryModel>[].obs;
   var isLoading = false.obs;
   var categoryTextController = TextEditingController();
+  var status = 'active'.obs;
   var isEdit = false.obs;
   @override
   void onInit() {
@@ -58,6 +59,22 @@ class RepositoryCategoryController extends GetxController {
     try {
       var response =
           await services.saveRepositoryCategories(categoryTextController.text);
+      if (response == 200) {
+        onSuccess();
+      } else {
+        onError();
+      }
+    } catch (ex) {
+      onError();
+    }
+  }
+
+  void updateRepositoryCategory(
+      int id, Function onLoading, Function onSuccess, Function onError) async {
+    onLoading();
+    try {
+      var response = await services.updateRepositoryCategories(
+          id, categoryTextController.text, status.value);
       if (response == 200) {
         onSuccess();
       } else {

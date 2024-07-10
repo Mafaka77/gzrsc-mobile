@@ -56,4 +56,10 @@ class Routes {
       '${BASE_URL}delete-repository-categories';
   static String SAVE_REPOSITORY_CATEGORIES =
       '${BASE_URL}save-repository-categories';
+  static String UPDATE_REPOSITORY_CATEGORIES =
+      '${BASE_URL}update-repository-categories';
+  static String GET_ALL_REPOSITORIES = '${BASE_URL}get-all-repositories';
+  static String GET_ALL_CATEGORIES = '${BASE_URL}get-all-categories';
+  static String SAVE_REPOSITORIES = '${BASE_URL}save-repositories';
+  static String DELETE_REPOSITORIES = '${BASE_URL}delete-repositories';
 }

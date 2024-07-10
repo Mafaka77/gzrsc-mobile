@@ -6,6 +6,7 @@ import 'package:lms/screens/assign_student_mentor_screen.dart';
 import 'package:lms/screens/attendance_screen.dart';
 import 'package:lms/screens/dashboard_screen.dart';
 import 'package:lms/screens/internal_mark_screen.dart';
+import 'package:lms/screens/repositories_screen.dart';
 import 'package:lms/screens/repository_category_screen.dart';
 import 'package:lms/screens/semester_exam_fees_screen.dart';
 import 'package:lms/screens/semester_exam_score_screen.dart';
@@ -23,6 +24,7 @@ class HomeController extends GetxController {
     SemesterExamScoreScreen(),
     AssignStudentMentorScreen(),
     RepositoryCategoryScreen(),
+    RepositoriesScreen()
   ];
   var userData = <UserModel>{}.obs;
   var isLoading = false.obs;

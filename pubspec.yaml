@@ -20,6 +20,9 @@ dependencies:
   flutter_overlay_loader: ^2.0.0
   pull_to_refresh: ^2.0.0
   get_storage: ^2.1.1
+  file_picker: ^8.0.0+1
+  permission_handler: ^11.0.1
+  open_filex: ^4.4.0
 
 dev_dependencies:
   flutter_test:

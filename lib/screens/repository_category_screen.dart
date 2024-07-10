@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lms/controllers/repository_category_controller.dart';
@@ -17,7 +18,7 @@ class RepositoryCategoryScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 controller.isEdit.value = false;
-                openAddDialog(context, controller);
+                openAddDialog(0, context, controller);
                 controller.categoryTextController.clear();
                 controller.update();
               },
@@ -54,8 +55,10 @@ class RepositoryCategoryScreen extends StatelessWidget {
                                       controller.isEdit.value = true;
                                       controller.categoryTextController.text =
                                           data.name!;
+                                      controller.status.value = data.status!;
                                       controller.update();
-                                      openAddDialog(context, controller);
+                                      openAddDialog(
+                                          data.id!, context, controller);
                                     },
                                     tileColor: Colors.white,
                                     dense: true,
@@ -135,7 +138,8 @@ class RepositoryCategoryScreen extends StatelessWidget {
         });
   }
 
-  openAddDialog(BuildContext context, RepositoryCategoryController controller) {
+  openAddDialog(
+      int id, BuildContext context, RepositoryCategoryController controller) {
     showDialog(
         context: context,
         builder: (_) {
@@ -163,7 +167,39 @@ class RepositoryCategoryScreen extends StatelessWidget {
                         hintText: 'Name',
                         border: OutlineInputBorder(),
                       ),
-                    )
+                    ),
+                    sizedBox(10),
+                    Obx(
+                      () => DropdownSearch<String>(
+                        validator: (item) {
+                          if (item == null) {
+                            return "Required field";
+                          }
+                          return null;
+                        },
+                        popupProps: const PopupProps.menu(
+                          showSearchBox: false,
+                          fit: FlexFit.tight,
+                          showSelectedItems: true,
+                        ),
+                        items: const [
+                          "active",
+                          "inactive",
+                        ],
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: 'Select Status',
+                            border: OutlineInputBorder(),
+                            isDense: true,
+                            suffixIcon: Icon(Icons.search),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          controller.status.value = value!;
+                        },
+                        selectedItem: controller.status.value,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -180,28 +216,45 @@ class RepositoryCategoryScreen extends StatelessWidget {
                 color: Colors.blue,
                 onPressed: () {
                   if (controller.formKey.currentState!.validate()) {
-                    controller.saveRepositoryCategory(() {
-                      reusableWidget.showLoader(context);
-                    }, () {
-                      mySnackBar(
-                        'Successfully Inserter',
-                        const Icon(
-                          Icons.check,
-                          color: Colors.blue,
-                        ),
-                      );
-                      reusableWidget.hideLoader();
-                      controller.getRepositoryCategories();
-                      Navigator.pop(context);
-                    }, () {
-                      mySnackBar(
-                          'Error Occured',
-                          const Icon(
-                            Icons.warning,
-                            color: Colors.red,
-                          ));
-                      reusableWidget.hideLoader();
-                    });
+                    controller.isEdit.isFalse
+                        ? controller.saveRepositoryCategory(() {
+                            reusableWidget.showLoader(context);
+                          }, () {
+                            mySnackBar(
+                              'Successfully Inserted',
+                              const Icon(
+                                Icons.check,
+                                color: Colors.blue,
+                              ),
+                            );
+                            reusableWidget.hideLoader();
+                            controller.getRepositoryCategories();
+                            Navigator.pop(context);
+                          }, () {
+                            mySnackBar(
+                                'Error Occured',
+                                const Icon(
+                                  Icons.warning,
+                                  color: Colors.red,
+                                ));
+                            reusableWidget.hideLoader();
+                          })
+                        : controller.updateRepositoryCategory(id, () {
+                            reusableWidget.showLoader(context);
+                          }, () {
+                            mySnackBar(
+                              'Updated Successfully',
+                              const Icon(
+                                Icons.check,
+                                color: Colors.blue,
+                              ),
+                            );
+                            reusableWidget.hideLoader();
+                            Navigator.pop(context);
+                            controller.getRepositoryCategories();
+                          }, () {
+                            reusableWidget.hideLoader();
+                          });
                   }
                 },
                 child: const Text(

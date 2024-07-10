@@ -30,6 +30,10 @@ class RepositoryCategoryModel {
     return list.map((e) => RepositoryCategoryModel.fromMap(e)).toList();
   }
 
+  bool isEqual(RepositoryCategoryModel model) {
+    return id == model.id;
+  }
+
   String toJson() => json.encode(toMap());
 
   factory RepositoryCategoryModel.fromJson(String source) =>
@@ -37,8 +41,7 @@ class RepositoryCategoryModel {
           json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() =>
-      'RepositoryCategoryModel(id: $id, name: $name, status: $status)';
+  String toString() => '$name';
 
   @override
   bool operator ==(covariant RepositoryCategoryModel other) {

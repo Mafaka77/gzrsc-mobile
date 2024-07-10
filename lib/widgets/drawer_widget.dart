@@ -163,6 +163,14 @@ class DrawerWidget extends GetView<HomeController> {
                       onItemTapped(7);
                       Navigator.pop(context);
                     },
+                  ),
+                  ListTile(
+                    title: const Text('Repositories'),
+                    selected: controller.selectedIndex.value == 8,
+                    onTap: () {
+                      onItemTapped(8);
+                      Navigator.pop(context);
+                    },
                   )
                 ],
               ),
