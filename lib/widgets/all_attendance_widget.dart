@@ -454,6 +454,7 @@ class AllAttendanceWidget extends GetView<AttendanceController> {
             actions: [
               MaterialButton(
                 onPressed: () {
+                  controller.clearAllFilterForms();
                   controller.getAllAttendance();
                   Navigator.pop(context);
                 },

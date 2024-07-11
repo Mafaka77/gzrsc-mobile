@@ -71,6 +71,7 @@ class InternalExamMarkWidget extends GetView<InternalMarkController> {
                       onPressed: () {
                         controller.internalExamMarks.clear();
                         controller.subject.value = '';
+                        controller.getAllStudents(() {});
                       },
                       child: const Text('Clear'),
                     ),

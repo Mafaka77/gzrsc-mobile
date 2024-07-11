@@ -80,8 +80,16 @@ class RepositoryServices extends BaseService {
     }
   }
 
-  Future saveRepositories(int catId, String title, String description,
-      File? file, String date, String fileName, int submittedBy) async {
+  Future saveRepositories(
+    int catId,
+    String title,
+    String description,
+    File? file,
+    String date,
+    String fileName,
+    int submittedBy,
+    String status,
+  ) async {
     try {
       FormData formData = FormData.fromMap({
         'category_id': catId,
@@ -92,6 +100,7 @@ class RepositoryServices extends BaseService {
             : await MultipartFile.fromFile(file.path, filename: fileName),
         'date': date,
         'submitted_by': submittedBy,
+        'status': status,
       });
       var response =
           await client.post(Routes.SAVE_REPOSITORIES, data: formData);
@@ -108,6 +117,27 @@ class RepositoryServices extends BaseService {
       return response.statusCode;
     } catch (ex) {
       return Future.error(ex);
+    }
+  }
+
+  Future updateRepositories(int id, int catId, String title, String description,
+      File? file, String date, String fileName, String status) async {
+    try {
+      FormData formData = FormData.fromMap({
+        'category_id': catId,
+        'title': title,
+        'description': description,
+        'file': file!.path == ''
+            ? null
+            : await MultipartFile.fromFile(file.path, filename: fileName),
+        'date': date,
+        'status': status,
+      });
+      var response =
+          await client.put(Routes.UPDATE_REPOSITORIES, data: formData);
+      return response.statusCode;
+    } catch (ex) {
+      print(ex);
     }
   }
 }

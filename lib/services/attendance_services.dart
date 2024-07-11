@@ -55,7 +55,7 @@ class AttendanceServices extends BaseService {
     try {
       var response = await client.get(Routes.GET_INTERNAL_EXAM);
 
-      return InternalExamModel.fromJsonList(response.data['internal']);
+      return InternalExamModel.fromJsonList(response.data['internals']);
     } catch (ex) {
       print(ex);
       // mySnackBar('Something went Wrong! Try Again', const Icon(Icons.warning));

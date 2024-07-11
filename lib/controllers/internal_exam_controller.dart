@@ -9,7 +9,7 @@ class InternalExamController extends GetxController {
   final formKey = GlobalKey<FormState>();
   var onLoading = false.obs;
   var internalExamList = <InternalExamModel>[].obs;
-  var status = ''.obs;
+  var status = 'active'.obs;
   var internalName = TextEditingController();
   var internalCode = TextEditingController();
   @override

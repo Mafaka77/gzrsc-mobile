@@ -293,11 +293,11 @@ class AttendanceController extends GetxController {
   Future filterAttendances(
       Function onLoading, Function onSuccess, Function onError) async {
     onLoading();
+    allAttendanceList.clear();
     try {
       var response = await services.filterAttendaces(filterByProgrammeId.value,
           filterByBatchId.value, filterByName.text, filterByRegnNo.text);
       allAttendanceList.clear();
-
       for (var data in response) {
         allAttendanceList.add(AllAttendanceModel(
             id: data['id'],
@@ -328,5 +328,12 @@ class AttendanceController extends GetxController {
           ));
       onError();
     }
+  }
+
+  void clearAllFilterForms() {
+    filterByName.clear();
+    filterByBatchId.value = 0;
+    filterByProgrammeId.value = 0;
+    filterByRegnNo.clear();
   }
 }

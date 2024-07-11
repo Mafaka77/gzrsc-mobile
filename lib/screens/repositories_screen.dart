@@ -60,8 +60,12 @@ class RepositoriesScreen extends StatelessWidget {
                                 controller.dateTextController.text = data.date!;
                                 controller.categoryData.value =
                                     data.repositoryCategoryModel;
+                                controller.categoryId.value =
+                                    data.repository_category_id!;
                                 controller.attachmentController.text =
                                     data.attachments!;
+                                controller.status.value = data.status!;
+                                controller.attachmentFile = File('');
                                 openAddDialog(context, controller, data.id!);
                               },
                               dense: true,
@@ -162,7 +166,7 @@ class RepositoriesScreen extends StatelessWidget {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
-                    const Text('ADD REPOSITORIES'),
+                    const Text(' REPOSITORIES'),
                     sizedBox(20),
                     DropdownSearch<RepositoryCategoryModel>(
                       selectedItem: controller.categoryData.value,
@@ -244,12 +248,12 @@ class RepositoriesScreen extends StatelessWidget {
                     sizedBox(10),
                     Obx(
                       () => TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Required field *';
-                          }
-                          return null;
-                        },
+                        // validator: (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Required field *';
+                        //   }
+                        //   return null;
+                        // },
                         onTap: () async {
                           var permission = await Permission.storage.status;
                           if (permission.isDenied) {
@@ -376,7 +380,7 @@ class RepositoriesScreen extends StatelessWidget {
                           }, () {
                             reusableWidget.hideLoader();
                             controller.getAllRepositories();
-                            mySnackBar('Successfully Inserted',
+                            mySnackBar('Updated Successfully',
                                 const Icon(Icons.check));
                             Navigator.pop(context);
                           }, () {

@@ -68,6 +68,7 @@ class RepositoriesController extends GetxController {
         dateTextController.text,
         attachmentController.text,
         submittedBy.value,
+        status.value,
       );
       if (response == 200) {
         onSuccess();
@@ -96,7 +97,26 @@ class RepositoriesController extends GetxController {
 
   void updateRepositories(
       int id, Function onLoading, Function onSuccess, Function onError) async {
-    try {} catch (ex) {}
+    onLoading();
+    try {
+      var response = await services.updateRepositories(
+        id,
+        categoryId.value,
+        titleTextController.text,
+        descriptionTextController.text,
+        attachmentFile,
+        dateTextController.text,
+        attachmentController.text,
+        status.value,
+      );
+      if (response == 200) {
+        onSuccess();
+      } else {
+        onError();
+      }
+    } catch (ex) {
+      onError();
+    }
   }
 
   void clearForm() {
