@@ -34,7 +34,7 @@ class DrawerWidget extends GetView<HomeController> {
                     children: [
                       Obx(() => controller.isLoading.isTrue
                           ? const CircularProgressIndicator()
-                          : const Text('')),
+                          : Text(controller.userData.first.name!)),
                       sizedBox(20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,6 +174,27 @@ class DrawerWidget extends GetView<HomeController> {
                   )
                 ],
               ),
+              // ExpansionTile(
+              //   title: const Text('Post'),
+              //   children: [
+              //     ListTile(
+              //       title: const Text('Post Category'),
+              //       selected: controller.selectedIndex.value == 9,
+              //       onTap: () {
+              //         onItemTapped(9);
+              //         Navigator.pop(context);
+              //       },
+              //     ),
+              //     ListTile(
+              //       title: const Text('Post'),
+              //       selected: controller.selectedIndex.value == 10,
+              //       onTap: () {
+              //         onItemTapped(10);
+              //         Navigator.pop(context);
+              //       },
+              //     )
+              //   ],
+              // ),
             ],
           ),
         ],

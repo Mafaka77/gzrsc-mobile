@@ -63,4 +63,10 @@ class Routes {
   static String SAVE_REPOSITORIES = '${BASE_URL}save-repositories';
   static String DELETE_REPOSITORIES = '${BASE_URL}delete-repositories';
   static String UPDATE_REPOSITORIES = '${BASE_URL}update-repositories';
+
+  //HOME
+  static String INDEX = '${BASE_URL}index';
+
+  //POST
+  static String GET_ALL_POST_CATEGORY = '${BASE_URL}get-all-post-category';
 }

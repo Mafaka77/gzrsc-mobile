@@ -11,6 +11,7 @@ import 'package:lms/services/home_services.dart';
 import 'package:lms/services/internal_exam_services.dart';
 import 'package:lms/services/internal_mark_services.dart';
 import 'package:lms/services/login_services.dart';
+import 'package:lms/services/post_services.dart';
 import 'package:lms/services/repository_services.dart';
 import 'package:lms/services/semester_exam_fee_services.dart';
 import 'package:lms/services/semester_exam_score_services.dart';
@@ -28,6 +29,7 @@ void main() async {
   Get.put(DashboardServices(), tag: 'dashboardServices');
   Get.put(AssignStudentMentorServices(), tag: 'assignStudentServices');
   Get.put(RepositoryServices(), tag: 'repositoryServices');
+  Get.put(PostServices(), tag: 'postServices');
   await GetStorage.init();
   token = storage.read('token');
   runApp(const MyApp());

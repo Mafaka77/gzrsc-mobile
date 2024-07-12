@@ -11,19 +11,56 @@ class DashboardScreen extends StatelessWidget {
     return GetBuilder<DashboardController>(
         init: DashboardController(),
         builder: (controller) {
-          return SingleChildScrollView(
+          return const SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  const Text('data'),
-                  MaterialButton(
-                    child: const Text('Delete'),
-                    onPressed: () async {
-                      print('Hello');
-                      await storage.erase();
-                    },
-                  )
+                  Card(
+                    elevation: 0,
+                    child: ListTile(
+                      title: Text('Application | All'),
+                      subtitle: Column(
+                        children: [
+                          Text(
+                            '187',
+                            style: TextStyle(
+                                fontSize: 26, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                    elevation: 0,
+                    child: ListTile(
+                      title: Text('Student | All'),
+                      subtitle: Column(
+                        children: [
+                          Text(
+                            '187',
+                            style: TextStyle(
+                                fontSize: 26, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Card(
+                    elevation: 0,
+                    child: ListTile(
+                      title: Text('Faculty | All'),
+                      subtitle: Column(
+                        children: [
+                          Text(
+                            '187',
+                            style: TextStyle(
+                                fontSize: 26, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
