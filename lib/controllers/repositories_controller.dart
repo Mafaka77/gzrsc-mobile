@@ -128,4 +128,6 @@ class RepositoriesController extends GetxController {
     categoryId.value = 0;
     categoryData.value = null;
   }
+
+  void download() async {}
 }

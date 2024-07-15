@@ -8,8 +8,10 @@ import 'package:intl/intl.dart';
 import 'package:lms/controllers/repositories_controller.dart';
 import 'package:lms/models/repository_category_model.dart';
 import 'package:lms/reusable_widget.dart';
+import 'package:lms/services/routes.dart';
 import 'package:lms/snackbar_widget.dart';
 import 'package:lms/widgets/sizedbox_widget.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class RepositoriesScreen extends StatelessWidget {
@@ -125,7 +127,9 @@ class RepositoriesScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          downloadFile(data.attachments!);
+                                        },
                                         child: const Text('Download'),
                                       )
                                     ],
@@ -470,5 +474,14 @@ class RepositoriesScreen extends StatelessWidget {
       var date = DateFormat('yyyy/MM/dd').format(datePicked!);
       controller.dateTextController.text = date;
     } catch (ex) {}
+  }
+
+  void downloadFile(String attachment) async {
+    var url = '${Routes.BASE_URL}storage/$attachment';
+    if (Platform.isIOS) {
+      Directory ios = await getApplicationDocumentsDirectory();
+      print(ios);
+      String fullPath = '${ios.path}/$attachment';
+    }
   }
 }
