@@ -53,15 +53,38 @@ class DrawerWidget extends GetView<HomeController> {
                                     MaterialStatePropertyAll(Colors.white),
                               ),
                               onPressed: () async {
-                                controller.logout(() {
-                                  reusableWidget.showLoader(context);
-                                }, () async {
-                                  reusableWidget.hideLoader();
-                                  Get.offAllNamed('/login-screen');
-                                  await storage.erase();
-                                }, () {
-                                  reusableWidget.hideLoader();
-                                });
+                                showAdaptiveDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return AlertDialog.adaptive(
+                                        title: const Text('Logout'),
+                                        content: const Text('Are you sure?'),
+                                        actions: [
+                                          MaterialButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('NO'),
+                                          ),
+                                          MaterialButton(
+                                            onPressed: () {
+                                              controller.logout(() {
+                                                reusableWidget
+                                                    .showLoader(context);
+                                              }, () async {
+                                                reusableWidget.hideLoader();
+                                                Get.offAllNamed(
+                                                    '/login-screen');
+                                                await storage.erase();
+                                              }, () {
+                                                reusableWidget.hideLoader();
+                                              });
+                                            },
+                                            child: const Text('YES'),
+                                          ),
+                                        ],
+                                      );
+                                    });
                               },
                               icon: const Icon(Icons.logout),
                               label: const Text('Logout')),

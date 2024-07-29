@@ -36,7 +36,7 @@ class HomeController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     getUser();
-    getHomeData();
+
     super.onInit();
   }
 
@@ -69,11 +69,5 @@ class HomeController extends GetxController {
     } catch (ex) {
       onError();
     }
-  }
-
-  void getHomeData() async {
-    try {
-      var response = await services.getHomeData();
-    } catch (ex) {}
   }
 }

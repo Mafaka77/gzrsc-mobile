@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart' as Dio;
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +13,7 @@ import 'package:lms/reusable_widget.dart';
 import 'package:lms/services/routes.dart';
 import 'package:lms/snackbar_widget.dart';
 import 'package:lms/widgets/sizedbox_widget.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,6 +27,7 @@ class RepositoriesScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
+              backgroundColor: FlexColor.greenDarkSecondaryVariant,
               onPressed: () {
                 controller.isEdit.value = false;
                 controller.clearForm();
@@ -130,7 +134,11 @@ class RepositoriesScreen extends StatelessWidget {
                                         onPressed: () {
                                           downloadFile(data.attachments!);
                                         },
-                                        child: const Text('Download'),
+                                        child: const Text(
+                                          'Download',
+                                          style: TextStyle(
+                                              color: FlexColor.blueDarkPrimary),
+                                        ),
                                       )
                                     ],
                                   )
@@ -143,7 +151,7 @@ class RepositoriesScreen extends StatelessWidget {
                                 },
                                 icon: const Icon(
                                   Icons.delete,
-                                  color: Colors.red,
+                                  color: FlexColor.redDarkPrimary,
                                 ),
                               ),
                             );
@@ -477,11 +485,56 @@ class RepositoriesScreen extends StatelessWidget {
   }
 
   void downloadFile(String attachment) async {
-    var url = '${Routes.BASE_URL}storage/$attachment';
+    var url = '${Routes.DOWNLOAD_FILE}storage/$attachment';
     if (Platform.isIOS) {
-      Directory ios = await getApplicationDocumentsDirectory();
-      print(ios);
-      String fullPath = '${ios.path}/$attachment';
+      Directory ios = await getApplicationSupportDirectory();
+      String getFile = attachment.toString();
+      String fullPath = '${ios.path}/$getFile';
+      print(url);
+      var dio = Dio.Dio();
+      download(url, fullPath, dio);
+    }
+  }
+
+  void download(String url, String fullPath, Dio.Dio dio) async {
+    String path = '';
+    var permission = await Permission.storage.status;
+    if (!permission.isGranted) {
+      await Permission.storage.request();
+    } else {
+      await Permission.storage.request();
+      Dio.Response response = await dio.get(url,
+          options: Dio.Options(
+            responseType: Dio.ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! < 500;
+            },
+          ));
+      File file = File(fullPath);
+      var raf = file.openSync(mode: FileMode.write);
+      raf.writeFromSync(response.data);
+      await raf.close();
+      if (response.statusCode == 200) {
+        Get.rawSnackbar(
+          message: 'Download Complete',
+          mainButton: MaterialButton(
+            child: const Text('View'),
+            onPressed: () {
+              // openFile(fullPath);
+            },
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> openFile(String path) async {
+    print(path);
+    try {
+      await OpenFilex.open(path);
+    } catch (ex) {
+      // reuseableWidget.snackBar('Cannot Open', const Icon(Icons.warning));
     }
   }
 }

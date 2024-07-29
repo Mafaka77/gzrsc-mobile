@@ -10,6 +10,7 @@ class LoginServices extends BaseService {
       });
       return response;
     } catch (ex) {
+      print(ex);
       Future.error(ex);
     }
   }

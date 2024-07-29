@@ -38,17 +38,11 @@ class LoginController extends GetxController {
             }
         }
       } else {
-        onError('Error Occured');
+        onError(response.data['message']);
       }
-
-      // if (response.data['status'] == 401) {
-      //   onError(response.data['message']);
-      // }
-      // var token = response.data['token'];
-      // storage.write('token', token);
-      // onSuccess();
     } catch (ex) {
-      onError();
+      print(ex);
+      onError(ex);
     }
   }
 }

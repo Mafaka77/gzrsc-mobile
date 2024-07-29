@@ -20,10 +20,4 @@ class HomeServices extends BaseService {
       return Future.error(ex);
     }
   }
-
-  Future getHomeData() async {
-    try {
-      var response = await client.get(Routes.INDEX);
-    } catch (ex) {}
-  }
 }
