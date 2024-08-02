@@ -41,6 +41,7 @@ class InternalExamController extends GetxController {
       internalExamList.addAll(response);
       onSuccess();
     } catch (ex) {
+      print(ex);
       onError();
     }
   }
