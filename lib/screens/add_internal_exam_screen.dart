@@ -115,6 +115,8 @@ class AddInternalExamScreen extends StatelessWidget {
                                                                 .showLoader(
                                                                     context);
                                                           }, () {
+                                                            Navigator.pop(
+                                                                context);
                                                             reusableWidget
                                                                 .hideLoader();
                                                             Get.back();
