@@ -32,21 +32,21 @@ class DrawerWidget extends GetView<HomeController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Obx(() => controller.isLoading.isTrue
-                          ? const CircularProgressIndicator()
-                          : Text(controller.userData.first.name!)),
+                      // Obx(() => controller.isLoading.isTrue
+                      //     ? const CircularProgressIndicator()
+                      //     : Text(controller.userData.first.name!)),
                       sizedBox(20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton.icon(
-                              style: const ButtonStyle(
-                                backgroundColor:
-                                    MaterialStatePropertyAll(Colors.white),
-                              ),
-                              onPressed: () {},
-                              icon: const Icon(Icons.person),
-                              label: const Text('My Profile')),
+                          // TextButton.icon(
+                          //     style: const ButtonStyle(
+                          //       backgroundColor:
+                          //           MaterialStatePropertyAll(Colors.white),
+                          //     ),
+                          //     onPressed: () {},
+                          //     icon: const Icon(Icons.person),
+                          //     label: const Text('My Profile')),
                           TextButton.icon(
                               style: const ButtonStyle(
                                 backgroundColor:
@@ -67,7 +67,7 @@ class DrawerWidget extends GetView<HomeController> {
                                             child: const Text('NO'),
                                           ),
                                           MaterialButton(
-                                            onPressed: () {
+                                            onPressed: () async {
                                               controller.logout(() {
                                                 reusableWidget
                                                     .showLoader(context);

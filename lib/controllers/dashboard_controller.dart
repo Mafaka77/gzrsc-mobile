@@ -21,6 +21,7 @@ class DashboardController extends GetxController {
       dashboardData.addAll(response);
       isLoading.value = false;
     } catch (ex) {
+      print(ex);
       isLoading.value = false;
       mySnackBar(
         'Something went wrong!!',

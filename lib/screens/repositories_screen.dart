@@ -47,6 +47,31 @@ class RepositoriesScreen extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     sizedBox(20),
+                    // MaterialButton(
+                    //   onPressed: () async {
+                    //     var permission = await Permission.camera.status;
+                    //     if (permission.isDenied) {
+                    //       await Permission.camera.request();
+                    //     } else {
+                    //       FilePickerResult? result =
+                    //           await FilePicker.platform.pickFiles(
+                    //         type: FileType.custom,
+                    //         allowedExtensions: ['pdf'],
+                    //       );
+                    //       if (result != null) {
+                    //         controller.isAttachmentPicked.value = true;
+                    //         File file = File(result.files.single.path!);
+                    //         String name =
+                    //             result.files.single.path!.split('/').last;
+                    //         controller.attachmentController.text = name;
+                    //         controller.attachmentFile = file;
+                    //       } else {
+                    //         controller.isAttachmentPicked.value = false;
+                    //       }
+                    //     }
+                    //   },
+                    //   child: const Text('Check'),
+                    // ),
                     Obx(
                       () => ListView.separated(
                           separatorBuilder: (context, index) => sizedBox(10),
@@ -63,7 +88,8 @@ class RepositoriesScreen extends StatelessWidget {
                                     data.title!;
                                 controller.descriptionTextController.text =
                                     data.description!;
-                                controller.dateTextController.text = data.date!;
+                                controller.dateTextController.text =
+                                    data.date ?? '';
                                 controller.categoryData.value =
                                     data.repositoryCategoryModel;
                                 controller.categoryId.value =
@@ -267,9 +293,9 @@ class RepositoriesScreen extends StatelessWidget {
                         //   return null;
                         // },
                         onTap: () async {
-                          var permission = await Permission.storage.status;
+                          var permission = await Permission.camera.status;
                           if (permission.isDenied) {
-                            await Permission.storage.request();
+                            await Permission.camera.request();
                           } else {
                             FilePickerResult? result =
                                 await FilePicker.platform.pickFiles(
