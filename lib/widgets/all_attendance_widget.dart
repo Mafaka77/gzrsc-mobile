@@ -70,138 +70,149 @@ class AllAttendanceWidget extends GetView<AttendanceController> {
               onLoading: () {
                 controller.loadMore();
               },
-              child: Obx(() => ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.allAttendanceList.length,
-                  itemBuilder: (c, i) {
-                    var data = controller.allAttendanceList[i];
-                    var date = DateTime.parse(data.month_year!);
-                    return Card(
-                      elevation: 0,
-                      child: ListTile(
-                        dense: true,
-                        title: Text(data.student_name!),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
+              child: Obx(() => controller.allAttendanceList.isEmpty
+                  ? const Center(
+                      child: Text('No Data'),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.allAttendanceList.length,
+                      itemBuilder: (c, i) {
+                        var data = controller.allAttendanceList[i];
+                        var date = DateTime.parse(data.month_year!);
+                        return Card(
+                          elevation: 0,
+                          child: ListTile(
+                            dense: true,
+                            title: Text(data.student_name!),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Attendance: ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                Wrap(
+                                  children: [
+                                    const Text(
+                                      'Attendance: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                        '${int.parse(data.attendance!.toStringAsFixed(0))}/${data.total}')
+                                  ],
                                 ),
-                                Text(
-                                    '${int.parse(data.attendance!.toStringAsFixed(0))}/${double.parse(data.total!).toStringAsFixed(0)}')
+                                Wrap(
+                                  children: [
+                                    const Text(
+                                      'Subject: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(data.subject_name!)
+                                  ],
+                                ),
+                                Wrap(
+                                  children: [
+                                    const Text(
+                                      'Programme: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                        '${data.programme_code!} - ${data.specialization_name!}')
+                                  ],
+                                ),
+                                Wrap(
+                                  children: [
+                                    const Text(
+                                      'Month-Year: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(DateFormat('MMM,y').format(date))
+                                  ],
+                                ),
                               ],
                             ),
-                            Wrap(
+                            trailing: Wrap(
                               children: [
-                                const Text(
-                                  'Subject: ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                IconButton(
+                                  onPressed: () {
+                                    var month = DateFormat('MMMM').format(
+                                        DateTime.parse(
+                                            data.month_year.toString()));
+                                    var monthNo = DateFormat('M').format(
+                                        DateTime.parse(
+                                            data.month_year.toString()));
+                                    var year = DateFormat('yyyy').format(
+                                        DateTime.parse(
+                                            data.month_year.toString()));
+                                    controller.monthData.value =
+                                        MonthModel(month: month);
+                                    controller.month.value = int.parse(monthNo);
+                                    controller.year.value = year;
+                                    openEditDialog(
+                                        context, data.id, data.attendance);
+                                  },
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.green,
+                                  ),
                                 ),
-                                Text(data.subject_name!)
+                                IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) {
+                                          return AlertDialog.adaptive(
+                                            title: const Text('Are you sure?'),
+                                            actions: [
+                                              MaterialButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text('No'),
+                                              ),
+                                              MaterialButton(
+                                                onPressed: () {
+                                                  controller.deleteAttendance(
+                                                      data.id!, () {
+                                                    reusableWidget
+                                                        .showLoader(context);
+                                                  }, () {
+                                                    Navigator.pop(context);
+                                                    reusableWidget.hideLoader();
+                                                    mySnackBar(
+                                                        'Successfully Deleted!',
+                                                        const Icon(
+                                                          Icons.check,
+                                                          color: Colors.blue,
+                                                        ));
+                                                  }, () {
+                                                    reusableWidget.hideLoader();
+                                                    mySnackBar(
+                                                        'Error Occured!',
+                                                        const Icon(
+                                                          Icons.warning,
+                                                          color: Colors.red,
+                                                        ));
+                                                  });
+                                                },
+                                                child: const Text('Confirm'),
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                ),
                               ],
                             ),
-                            Wrap(
-                              children: [
-                                const Text(
-                                  'Programme: ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                    '${data.programme_code!} - ${data.specialization_name!}')
-                              ],
-                            ),
-                            Wrap(
-                              children: [
-                                const Text(
-                                  'Month-Year: ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(DateFormat('MMM,y').format(date))
-                              ],
-                            ),
-                          ],
-                        ),
-                        trailing: Wrap(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                var month = DateFormat('MMMM').format(
-                                    DateTime.parse(data.month_year.toString()));
-                                var monthNo = DateFormat('M').format(
-                                    DateTime.parse(data.month_year.toString()));
-                                var year = DateFormat('yyyy').format(
-                                    DateTime.parse(data.month_year.toString()));
-                                controller.monthData.value =
-                                    MonthModel(month: month);
-                                controller.month.value = int.parse(monthNo);
-                                controller.year.value = year;
-                                openEditDialog(
-                                    context, data.id, data.attendance);
-                              },
-                              icon: const Icon(
-                                Icons.edit,
-                                color: Colors.green,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) {
-                                      return AlertDialog.adaptive(
-                                        title: const Text('Are you sure?'),
-                                        actions: [
-                                          MaterialButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('No'),
-                                          ),
-                                          MaterialButton(
-                                            onPressed: () {
-                                              controller.deleteAttendance(
-                                                  data.id!, () {
-                                                reusableWidget
-                                                    .showLoader(context);
-                                              }, () {
-                                                Navigator.pop(context);
-                                                reusableWidget.hideLoader();
-                                                mySnackBar(
-                                                    'Successfully Deleted!',
-                                                    const Icon(
-                                                      Icons.check,
-                                                      color: Colors.blue,
-                                                    ));
-                                              }, () {
-                                                reusableWidget.hideLoader();
-                                                mySnackBar(
-                                                    'Error Occured!',
-                                                    const Icon(
-                                                      Icons.warning,
-                                                      color: Colors.red,
-                                                    ));
-                                              });
-                                            },
-                                            child: const Text('Confirm'),
-                                          ),
-                                        ],
-                                      );
-                                    });
-                              },
-                              icon: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  })),
+                          ),
+                        );
+                      })),
             ),
           )
         ],

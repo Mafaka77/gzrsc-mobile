@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:lms/models/attendance_model.dart';
 import 'package:lms/models/batch_model.dart';
 import 'package:lms/models/internal_exam_model.dart';
@@ -91,11 +92,13 @@ class AttendanceServices extends BaseService {
       });
       return response.data['attendance'];
     } catch (ex) {
+      print(ex);
       return Future.error(ex);
     }
   }
 
   Future submitAttendance(List<AttendanceModel> studentAttendance) async {
+    // print(studentAttendance);
     try {
       var response = await client.post(
         Routes.SUBMIT_ATTENDANCE,
@@ -105,7 +108,6 @@ class AttendanceServices extends BaseService {
       );
       return response.data;
     } catch (ex) {
-      print(ex);
       return Future.error(ex);
     }
   }

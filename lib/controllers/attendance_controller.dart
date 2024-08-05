@@ -136,7 +136,7 @@ class AttendanceController extends GetxController {
                   ? 0
                   : d['attendance'][0]['attendance'],
               mzu_regn_no: d['mzu_regn_no'],
-              total: int.parse(noOfClass.text).toInt(),
+              total: int.parse(noOfClass.text),
               name: d['profile']['name']),
         );
         // for (var a in d['attendance']) {}
@@ -177,6 +177,7 @@ class AttendanceController extends GetxController {
       refreshController.refreshCompleted();
       isLoading.value = false;
     } catch (ex) {
+      print(ex);
       isLoading.value = false;
     }
   }

@@ -8,7 +8,7 @@ class AllAttendanceModel {
   int? semester;
   int? subject_id;
   int? attendance;
-  String? total;
+  int? total;
   String? month_year;
   String? status;
   int? entry_by;
@@ -46,7 +46,7 @@ class AllAttendanceModel {
     int? semester,
     int? subject_id,
     int? attendance,
-    String? total,
+    int? total,
     String? month_year,
     String? status,
     int? entry_by,
@@ -111,7 +111,7 @@ class AllAttendanceModel {
       semester: map['semester'] != null ? map['semester'] as int : null,
       subject_id: map['subject_id'] != null ? map['subject_id'] as int : null,
       attendance: map['attendance'] != null ? map['attendance'] as int : null,
-      total: map['total'] != null ? map['total'] as String : null,
+      total: map['total'] != null ? map['total'] as int : null,
       month_year:
           map['month_year'] != null ? map['month_year'] as String : null,
       status: map['status'] != null ? map['status'] as String : null,

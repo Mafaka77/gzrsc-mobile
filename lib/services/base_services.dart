@@ -21,10 +21,10 @@ class BaseService extends GetConnect implements GetxService {
         return handler.next(request);
       },
       onError: (error, handler) async {
-        print(error.response?.statusCode);
-        var storage = const FlutterSecureStorage();
+        // print(error.response?.statusCode);
+        // var storage = const FlutterSecureStorage();
         if (error.response?.statusCode == 401) {
-          await storage.delete(key: 'token');
+          await storage.remove('token');
           Get.offAll(() => LoginScreen());
         }
         handler.next(error);
