@@ -1,7 +1,7 @@
 class Routes {
   static String DOWNLOAD_FILE = 'https://gzrscmis.msegs.in/';
-  // static String BASE_URL = 'http://127.0.0.1:8000/api/';
-  static String BASE_URL = 'https://gzrscmis.msegs.in/api/';
+  static String BASE_URL = 'http://127.0.0.1:8000/api/';
+  // static String BASE_URL = 'https://gzrscmis.msegs.in/api/';
   static String LOGIN = '${BASE_URL}auth/login';
   static String GET_ME = '${BASE_URL}auth/me';
   static String LOGOUT = '${BASE_URL}auth/logout';

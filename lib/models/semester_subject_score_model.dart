@@ -19,6 +19,9 @@ class SemesterSubjectScoreModel {
   String? score;
   int? entry_by;
   int? semester_exam_id;
+  int? mark_obtain;
+  int? full_mark;
+
   SemesterSubjectScoreModel({
     this.id,
     this.department_id,
@@ -37,6 +40,8 @@ class SemesterSubjectScoreModel {
     this.score,
     this.entry_by,
     this.semester_exam_id,
+    this.mark_obtain,
+    this.full_mark,
   });
 
   SemesterSubjectScoreModel copyWith({
@@ -57,6 +62,8 @@ class SemesterSubjectScoreModel {
     String? score,
     int? entry_by,
     int? semester_exam_id,
+    int? mark_obtain,
+    int? full_mark,
   }) {
     return SemesterSubjectScoreModel(
       id: id ?? this.id,
@@ -76,6 +83,8 @@ class SemesterSubjectScoreModel {
       score: score ?? this.score,
       entry_by: entry_by ?? this.entry_by,
       semester_exam_id: semester_exam_id ?? this.semester_exam_id,
+      mark_obtain: mark_obtain ?? this.mark_obtain,
+      full_mark: full_mark ?? this.full_mark,
     );
   }
 
@@ -98,6 +107,8 @@ class SemesterSubjectScoreModel {
       'score': score,
       'entry_by': entry_by,
       'semester_exam_id': semester_exam_id,
+      'mark_obtain': mark_obtain,
+      'full_mark': full_mark,
     };
   }
 
@@ -126,6 +137,9 @@ class SemesterSubjectScoreModel {
       semester_exam_id: map['semester_exam_id'] != null
           ? map['semester_exam_id'] as int
           : null,
+      mark_obtain:
+          map['mark_obtain'] != null ? map['mark_obtain'] as int : null,
+      full_mark: map['full_mark'] != null ? map['full_mark'] as int : null,
     );
   }
 
@@ -137,7 +151,7 @@ class SemesterSubjectScoreModel {
 
   @override
   String toString() {
-    return 'SemesterSubjectScoreModel(id: $id, department_id: $department_id, programme_id: $programme_id, specialization_id: $specialization_id, name: $name, code: $code, semester: $semester, type: $type, credit: $credit, elective: $elective, active: $active, student_id: $student_id, batch_id: $batch_id, subject_id: $subject_id, score: $score, entry_by: $entry_by, semester_exam_id: $semester_exam_id)';
+    return 'SemesterSubjectScoreModel(id: $id, department_id: $department_id, programme_id: $programme_id, specialization_id: $specialization_id, name: $name, code: $code, semester: $semester, type: $type, credit: $credit, elective: $elective, active: $active, student_id: $student_id, batch_id: $batch_id, subject_id: $subject_id, score: $score, entry_by: $entry_by, semester_exam_id: $semester_exam_id, mark_obtain: $mark_obtain, full_mark: $full_mark)';
   }
 
   @override
@@ -160,7 +174,9 @@ class SemesterSubjectScoreModel {
         other.subject_id == subject_id &&
         other.score == score &&
         other.entry_by == entry_by &&
-        other.semester_exam_id == semester_exam_id;
+        other.semester_exam_id == semester_exam_id &&
+        other.mark_obtain == mark_obtain &&
+        other.full_mark == full_mark;
   }
 
   @override
@@ -181,6 +197,8 @@ class SemesterSubjectScoreModel {
         subject_id.hashCode ^
         score.hashCode ^
         entry_by.hashCode ^
-        semester_exam_id.hashCode;
+        semester_exam_id.hashCode ^
+        mark_obtain.hashCode ^
+        full_mark.hashCode;
   }
 }

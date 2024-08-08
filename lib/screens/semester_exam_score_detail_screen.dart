@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lms/controllers/semester_exam_score_controller.dart';
 import 'package:lms/reusable_widget.dart';
 import 'package:lms/snackbar_widget.dart';
+import 'package:lms/widgets/sizedbox_widget.dart';
 
 class SemesterExamScoreDetailScreen
     extends GetView<SemesterExamScoreController> {
@@ -97,27 +98,106 @@ class SemesterExamScoreDetailScreen
                               Text(myData.code ?? ''),
                             ],
                           ),
+                          sizedBox(10),
+                          Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              const Text(
+                                'Mark:        ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: Get.width * 0.25,
+                                child: TextFormField(
+                                  initialValue: myData.mark_obtain == null
+                                      ? '0'
+                                      : myData.mark_obtain.toString(),
+                                  onChanged: (value) {
+                                    myData.mark_obtain = int.parse(value);
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      isDense: true),
+                                ),
+                              ),
+                            ],
+                          ),
+                          sizedBox(10),
+                          Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              const Text(
+                                'Full Mark:   ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: Get.width * 0.25,
+                                child: TextFormField(
+                                  initialValue: myData.full_mark == null
+                                      ? '0'
+                                      : myData.full_mark.toString(),
+                                  onChanged: (value) {
+                                    myData.full_mark = int.parse(value);
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      isDense: true),
+                                ),
+                              ),
+                            ],
+                          ),
+                          sizedBox(10),
+                          Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              const Text(
+                                'Grade:       ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: Get.width * 0.25,
+                                child: DropdownSearch<String>(
+                                  selectedItem: myData.score,
+                                  items: const [
+                                    'O',
+                                    'A+',
+                                    'A',
+                                    'B+',
+                                    'B',
+                                    'C',
+                                    'F',
+                                    'Ab'
+                                  ],
+                                  onChanged: (value) {
+                                    myData.score = value;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
-                      trailing: SizedBox(
-                        width: Get.width * 0.25,
-                        child: DropdownSearch<String>(
-                          selectedItem: myData.score,
-                          items: const [
-                            'O',
-                            'A+',
-                            'A',
-                            'B+',
-                            'B',
-                            'C',
-                            'F',
-                            'Ab'
-                          ],
-                          onChanged: (value) {
-                            myData.score = value;
-                          },
-                        ),
-                      ),
+                      // trailing: SizedBox(
+                      //   width: Get.width * 0.25,
+                      //   child: DropdownSearch<String>(
+                      //     selectedItem: myData.score,
+                      //     items: const [
+                      //       'O',
+                      //       'A+',
+                      //       'A',
+                      //       'B+',
+                      //       'B',
+                      //       'C',
+                      //       'F',
+                      //       'Ab'
+                      //     ],
+                      //     onChanged: (value) {
+                      //       myData.score = value;
+                      //     },
+                      //   ),
+                      // ),
                     ),
                   );
                 },

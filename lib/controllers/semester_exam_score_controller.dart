@@ -108,6 +108,12 @@ class SemesterExamScoreController extends GetxController
             semester_exam_id: data['semester_exam'].isEmpty
                 ? 0
                 : data['semester_exam'][0]['id'],
+            mark_obtain: data['semester_exam'].isEmpty
+                ? 0
+                : data['semester_exam'][0]['mark_obtain'],
+            full_mark: data['semester_exam'].isEmpty
+                ? 0
+                : data['semester_exam'][0]['full_mark'],
           ),
         );
         // }

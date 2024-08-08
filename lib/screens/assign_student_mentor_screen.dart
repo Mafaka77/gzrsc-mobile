@@ -87,8 +87,8 @@ class AssignStudentMentorScreen extends StatelessWidget {
                                               dense: true,
                                               title: Text(data.name.toString()),
                                               subtitle: Text(
-                                                data.departmentModel!.name
-                                                    .toString(),
+                                                data.departmentModel?.name ??
+                                                    '',
                                               ),
                                               // trailing: IconButton(
                                               //   onPressed: () {},
