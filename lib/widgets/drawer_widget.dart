@@ -32,9 +32,9 @@ class DrawerWidget extends GetView<HomeController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Obx(() => controller.isLoading.isTrue
-                      //     ? const CircularProgressIndicator()
-                      //     : Text(controller.userData.first.name!)),
+                      Obx(() => controller.isLoading.isTrue
+                          ? const CircularProgressIndicator()
+                          : Text(controller.userData.first.name!)),
                       sizedBox(20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
